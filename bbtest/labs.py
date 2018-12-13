@@ -1,9 +1,8 @@
+
 class BlackLab():
+
     boxes = {}
     hosts = {}
-
-    def get_host(self, params):
-        pass
 
     def __init__(self, lab):
         for host_name, host in lab.items():
@@ -12,6 +11,9 @@ class BlackLab():
             for box_class in host['boxes']:
                 box = box_class()
                 self.boxes[host_name] = box
+
+    def get_host(self, params):
+        pass
 
     def clean(self):
         """Restore the lab back to its original condition """

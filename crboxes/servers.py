@@ -1,6 +1,8 @@
 
+from .boxes import CRBlackBox
 
-class CRServer():
+
+class CRServer(CRBlackBox):
     pass
 
 

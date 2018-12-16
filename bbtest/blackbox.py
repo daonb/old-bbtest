@@ -1,6 +1,4 @@
 
-from .labs import BlackLab
-
 
 class BlackBox():
     """This is an abstract class used to wrap a component in a black box.

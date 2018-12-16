@@ -1,5 +1,5 @@
 
-class BlackLab():
+class Lab():
 
     boxes = {}
     hosts = {}

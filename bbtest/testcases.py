@@ -1,5 +1,4 @@
 import logging
-import sys
 from unittest import TestCase
 
 from bbtest import Lab

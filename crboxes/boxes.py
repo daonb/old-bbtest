@@ -1,5 +1,5 @@
 
-from bbtest.blackbox import BlackBox
+from bbtest.blackboxes import BlackBox
 
 
 class CRBlackBox(BlackBox):

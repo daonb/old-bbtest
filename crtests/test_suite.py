@@ -6,8 +6,8 @@ a black box methodology.
 """
 from bbtest.testcase import BBTestCase
 
-from crboxes.nodes import Endpoint, Host
-from crboxes.servers import Transparency, Registry
+from crboxes.nodes import EndpointBox, HostBox
+from crboxes.servers import TransparencyBox, RegistryBox
 
 
 class CRTestCase(BBTestCase):
@@ -18,19 +18,26 @@ class LabTest(CRTestCase):
 
     LAB = {
         'ep': {
-            'box': Endpoint,
             'image': "linux",
             'boxes': [],
          },
         'server': {
-            'box': Host,
             'image': "linux",
-            'boxes': [Transparency, Registry],
+            'boxes': [TransparencyBox, RegistryBox],
          },
     }
 
     def test_add(self):
-        todo_box = self.boxes['todo']
-        todo_box.add("Foo")
-        todos = todo_box.list()
-        assert todos == ["Foo"]
+        ep_host = self.lab.hosts['ep']
+        transparency_url = self.lab.boxes['transparency'].url
+        registery_url = self.lab.boxes['registery'].url
+        # Print the EP IP address.
+        print(ep_host.ip)
+        # Install sensor on EP.
+        ep_host.install('/path/to/installer/dist/', {'transparency': transparency_url,
+                                                     'registry': registry_url})
+        assert ep_host.path.isfile('file')
+        try:
+            assert ep_host.registry('entry') == 'value'
+        except NotImplemented as _:
+            pass

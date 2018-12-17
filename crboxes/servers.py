@@ -2,17 +2,17 @@
 from .boxes import CRBlackBox
 
 
-class CRServer(CRBlackBox):
+class CRServerBox(CRBlackBox):
     pass
 
 
-class Perspective(CRServer):
+class PerspectiveBox(CRServerBox):
     pass
 
 
-class Transparency(CRServer):
+class TransparencyBox(CRServerBox):
     pass
 
 
-class Registry(CRServer):
+class RegistryBox(CRServerBox):
     pass

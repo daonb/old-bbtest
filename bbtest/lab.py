@@ -12,9 +12,6 @@ class Lab():
                 box = box_class()
                 self.boxes[host_name] = box
 
-    def get_host(self, params):
-        pass
-
     def clean(self):
         """Restore the lab back to its original condition """
         for box in self.boxes:

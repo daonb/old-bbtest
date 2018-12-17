@@ -11,8 +11,6 @@ class BBTestCase(TestCase):
         """setups a lab for black box testing. """
         super().setUp()
         self.lab = BlackLab(self.LAB)
-        # Most tests don't care about the lab and its topology so they should access boxes directly.
-        self.boxes = self.lab.boxes
 
     def tearDown(self):
         self.lab.clean()

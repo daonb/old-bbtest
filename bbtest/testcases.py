@@ -1,7 +1,10 @@
-
+import logging
+import sys
 from unittest import TestCase
 
-from bbtest import BlackLab
+from bbtest import Lab
+
+logger = logging.getLogger('bblog')
 
 
 class BBTestCase(TestCase):
@@ -10,7 +13,9 @@ class BBTestCase(TestCase):
     def setUp(self):
         """setups a lab for black box testing. """
         super().setUp()
-        self.lab = BlackLab(self.LAB)
+        logger.setLevel(logging.DEBUG)
+        if hasattr(self, 'LAB'):
+            self.lab = Lab(self.LAB)
 
     def tearDown(self):
         self.lab.clean()

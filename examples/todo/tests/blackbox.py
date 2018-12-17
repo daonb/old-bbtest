@@ -1,4 +1,6 @@
 import logging
+import sys
+import os
 
 from bbtest import BlackBox, BBTestCase
 
@@ -15,17 +17,20 @@ class ToDoBox(BlackBox):
     """
 
     NAME = 'todo'
+
     def install(self):
-        self.host.put("examples/todo/src/todo.sh", remote="/tmp/todo.sh")
-        self.host.put("examples/todo/src/todo.cfg", remote="/tmp/todo.cfg")
+        src_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'src')
+        self.host.put(os.path.join(src_dir, 'todo.sh'), remote=os.path.join(self.host.temp_dir, 'todo.sh'))
+        self.host.put(os.path.join(src_dir, 'todo.cfg'), remote=os.path.join(self.host.temp_dir, 'todo.cfg'))
 
     def clean(self, msg):
         return self.host.run('rm todo.txt')
 
     def run(self, msg):
         """Pass on a todo.sh command  such ass add, list, etc """
-        logger.info(f"ToDoBox Starts: {msg}")
-        result = self.host.run(f'/tmp/todo.sh {msg}')
+        todo_sh = os.path.join(self.host.temp_dir, 'todo.sh')
+        logger.info(f"ToDoBox Starts: {todo_sh} {msg}")
+        result = self.host.run(f'{todo_sh} {msg}')
         logger.info(f"ToDoBox returns: {result}")
         return result
 

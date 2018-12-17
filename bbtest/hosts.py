@@ -2,6 +2,7 @@
 Hosts in the network.
 """
 import os
+import sys
 from shutil import copyfile
 
 
@@ -16,6 +17,17 @@ class Host(object):
 
 class LocalHost(Host):
 
+    @property
+    def os(self):
+        return sys.platform
+
+    @property
+    def temp_dir(self):
+        if self.os == 'win32':
+            return 'c:/temp'
+        else:
+            None
+
     def run(self, cmd):
         return os.system(cmd)
 
@@ -24,7 +36,10 @@ class LocalHost(Host):
 
 
 class WindowsHost(Host):
-    pass
+
+    @property
+    def os(self):
+        return 'win32'
 
 
 class LinuxHost(Host):

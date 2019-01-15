@@ -2,7 +2,7 @@
 """
 
 from bbtest import BBTestCase
-from bbtest import WindowsHost
+from bbtest import LinuxHost
 from cybereason.boxes.sensor import SensorBox
 from cybereason.boxes import TransparencyMockBox
 
@@ -11,11 +11,11 @@ class PylumMockTest(BBTestCase):
 
     LAB = {
         'host1': {
-            'class': WindowsHost,
+            'class': LinuxHost,
             'boxes': [TransparencyMockBox],
          },
     }
-    address_book = {'host1': {'ip': '127.0.0.1', 'auth': None}}
+    address_book = {'host1': {'ip': '127.0.0.1', 'auth': ('bbtest', 'Password1')}}
 
     def test_install(self):
         """

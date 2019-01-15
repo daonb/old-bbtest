@@ -116,9 +116,9 @@ class LocalHost(BaseHost):
     def name(self):
         return socket.gethostname()
 
-    def run(self, *args, **kwargs):
+    def run(self, args, **kwargs):
         logger.debug(f'{self.__class__.__name__} run command: {args} {kwargs}')
-        output = target.run(*args, **kwargs)
+        output = target.run(args, **kwargs)
         logger.debug(f'{self.__class__.__name__} run raw stdout: {output}')
         parsed_output = [] if output == b'' else output.decode('utf-8').splitlines()
         logger.debug(f'{self.__class__.__name__} run parsed stdout: {parsed_output}')
@@ -226,7 +226,7 @@ class LocalWindowsHost(LocalHost):
 
 class LocalLinuxHost(LocalHost):
 
-    ROOT_PATH = '/tmp'
+    ROOT_PATH = '/home/bbtest'
 
     def run_python2(self, *args_in, **kwargs):
         args = ['python2']
@@ -360,7 +360,7 @@ class WindowsHost(RemoteHost):
 
 class LinuxHost(RemoteHost):
 
-    ROOT_PATH = '/tmp'
+    ROOT_PATH = '/home/bbtest'
 
     def run(self, *args, **kwargs):
         return super().run(' '.join(args), **kwargs)

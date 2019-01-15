@@ -4,7 +4,6 @@ import subprocess
 
 import unittest
 from bbtest import HomeBox, BBTestCase
-from pipenv.core import do_run
 
 class MessageNotReceived(Exception):
     pass
@@ -184,15 +183,16 @@ class Py2Box(HomeBox):
 
 class TransparencyMockBox(Py2Box):
 
-    PACKAGEPATH = r'c:\Users\benny.daon\Source\pylum-mock\pylum-mock.tar'
+    # PACKAGEPATH = r'c:\Users\benny.daon\Source\pylum-mock\pylum-mock.tar'
+    PACKAGEPATH = '/tmp/pylum-mock.tar'
 
     def install(self, port=8001):
         super().install(self.PACKAGEPATH)
         self.port = port
         self.proc = self.host.modules.subprocess.Popen(
-            ['py', '-3', '-m', 'pipenv','run', 'py', '-2', './server.py', '-v', '-p', str(port)],
+            ['python3', '-m', 'pipenv','run', 'py', '-2', './server.py', '-v', '-p', str(port)],
             stdout=subprocess.PIPE, env={'PIPENV_IGNORE_VIRTUALENVS': '1'})
-    
+
     def clean(self):
         #TODO: remove the sized pickled file
 
@@ -203,7 +203,7 @@ class TransparencyMockBox(Py2Box):
         file_path = os.path.join(self.path, 'data', f'{filename}.spkl')
         data = DataReader(file_path)
         return data.filter(**kwargs)
- 
+
     def assert_message_received(self, filename='AP', **kwargs):
         if not self.host.modules.TransparencyMockBox._find_message(filename, **kwargs):
             raise MessageNotReceived(f"Message like '{kwargs}' was not found")

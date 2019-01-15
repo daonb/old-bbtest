@@ -83,9 +83,23 @@ class BaseHost(object):
     def rmfile(self, path):
         raise NotImplementedError('Missing method implementation')
 
-    def run_python2(self, *args, **kwargs):
+    def run_python2(self, args_in, **kwargs):
         """Call run command with python2 as the process"""
-        raise NotImplementedError('Missing method implementation')
+        if 'win' in self.os:
+            args = ['py', '-2']
+        else:
+            args = ['python2']
+        args.extend(args_in)
+        return self.run(args, **kwargs)
+
+    def run_python3(self, args_in, **kwargs):
+        """Call run command with python3 as the process"""
+        if 'win' in self.os:
+            args = ['py', '-3']
+        else:
+            args = ['python3']
+        args.extend(args_in)
+        return self.run(args, **kwargs)
 
     def join(self, *args):
         return self.SEP.join(args)
@@ -200,10 +214,6 @@ class LocalWindowsHost(LocalHost):
         except WindowsError:
             return False
 
-    def run_python2(self, *args_in, **kwargs):
-        args = ['py', '-2']
-        args.extend(args_in)
-        return self.run(*args, **kwargs)
 
     @staticmethod
     def is_service_running(service_name):
@@ -227,12 +237,6 @@ class LocalWindowsHost(LocalHost):
 class LocalLinuxHost(LocalHost):
 
     ROOT_PATH = '/home/bbtest'
-
-    def run_python2(self, *args_in, **kwargs):
-        args = ['python2']
-        args.extend(args_in)
-        return self.run(*args, **kwargs)
-
 
 class RemoteHost(BaseHost):
     """A remote host using RPyC

@@ -1,7 +1,8 @@
 
 from bbtest.blackboxes import HomeBox
+from .pylum_mock import TransparencyMockBox
 
-__all__ = ['CRBox']
+__all__ = ['CRBox', 'TransparencyMockBox']
 
 
 class CRBox(HomeBox):
